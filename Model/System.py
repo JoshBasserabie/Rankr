@@ -6,7 +6,7 @@ class System:
 
     def createList(self, listName):
         newList = RankedList(len(self.rankedLists), listName)
-        rankedLists.append(newList)
+        self.rankedLists.append(newList)
 
     def createList(self, listName, listItemNames = None):
         newList = RankedList(len(self.rankedLists), listName, listItemNames)
@@ -14,3 +14,15 @@ class System:
             self.rankedLists().append(newList)
             return True
         return False
+
+    def deleteList(self, listID):
+        if listID > len(self.rankedLists) or listID < 0:
+            return False
+        self.rankedLists[listID], self.rankedLists[-1] = self.rankedLists[-1], self.rankedLists[listID]
+        self.rankedLists.pop()
+        return True
+
+    def getList(self, listID):
+        if listID > len(self.rankedLists) or listID < 0:
+            return None
+        return self.rankedList[listID]
