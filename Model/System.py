@@ -4,7 +4,7 @@ class System:
     def __init__(self):
         self.rankedLists = []
 
-    def createList(self, listName, listItemNames = None):
+    def createList(self, listName, listItemNames = []):
         newList = RankedList(listName, listItemNames)
         if newList is not None:
             self.rankedLists.append(newList)
