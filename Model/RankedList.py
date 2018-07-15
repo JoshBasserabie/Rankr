@@ -1,5 +1,5 @@
 from __future__ import division
-from Item import Item
+from Model.Item import Item
 
 class RankedList:
 
