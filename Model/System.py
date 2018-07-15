@@ -1,10 +1,11 @@
 from Model.RankedList import RankedList
 
+
 class System:
     def __init__(self):
         self.rankedLists = {}
 
-    def createList(self, listName, listItemNames = []):
+    def createList(self, listName, listItemNames=[]):
         newList = RankedList(listName, listItemNames)
         if newList is not None:
             self.rankedLists[listName] = newList
@@ -19,4 +20,4 @@ class System:
         return True
 
     def contains(self, listName):
-        return listName in self.rankedLists
+        return self.rankedLists.get(listName, None) is not None
