@@ -10,6 +10,8 @@ class RankedList:
         self.scoreList = []
         #List of voting 'lists' (actually dictionaries)
         self.votingList = []
+        #List of voting counts (how many other item each item has been compared to)
+        self.votingCounts = []
         # List of item references
         self.items = []
         # number of items
@@ -17,16 +19,18 @@ class RankedList:
 
     def addItem(self, name):
         if name is None:
-            return None
+            return False
         newItem = Item(self.itemNum, name)
         if newItem is None:
-            return None
+            return False
         self.sortedList.append(self.itemNum)
         self.votingList.append({})
         self.items.append(newItem)
-        self.scoreList.append(0)
+        self.votingCounts.append(0)
+        self.scoreList.append(0.0)
+        self.updateSortedList(self.itemNum)
         self.itemNum += 1
-        return self.itemNum
+        return True
 
     def handleVote(self, winnerName, loserName):
         winnerID = self.findItemIDByName(winnerName)
@@ -56,17 +60,26 @@ class RankedList:
                 votesAgainst = currVotes.get(itemID, 0)
                 if votesFor != 0 or votesAgainst != 0:
                     count += 1
-                    score += votesFor / (votesFor + votesAgainst)
+                    score += 2 * (votesFor / (votesFor + votesAgainst)) - 1
         score /= count
+        self.votingCounts[itemID] = count
         self.scoreList[itemID] = score
 
     def updateSortedList(self, itemID):
         #fix the sorted list by moving itemID until it is in a valid position
         position = self.sortedList.index(itemID)
-        while position < len(self.sortedList) - 1 and self.scoreList[itemID] < self.scoreList[self.sortedList[position + 1]]:
+        while position < len(self.sortedList) - 1 and self.scoreList[itemID] <= self.scoreList[self.sortedList[position + 1]]:
+            if self.scoreList[itemID] == self.scoreList[self.sortedList[position + 1]]:
+                if self.votingCounts[itemID] >= self.votingCounts[self.sortedList[position + 1]]:
+                    position += 1
+                    continue
             self.sortedList[position], self.sortedList[position + 1] = self.sortedList[position + 1], self.sortedList[position]
             position += 1
-        while position > 0 and self.scoreList[itemID] > self.scoreList[self.sortedList[position - 1]]:
+        while position > 0 and self.scoreList[itemID] >= self.scoreList[self.sortedList[position - 1]]:
+            if self.scoreList[itemID] == self.scoreList[self.sortedList[position - 1]]:
+                if self.votingCounts[itemID] <= self.votingCounts[self.sortedList[position - 1]]:
+                    position -= 1
+                    continue
             self.sortedList[position], self.sortedList[position - 1] = self.sortedList[position - 1], self.sortedList[position]
             position -= 1
 
@@ -77,3 +90,11 @@ class RankedList:
                 ID = i
                 break
         return ID
+
+    def __str__(self):
+        returnString = ""
+        returnString += "Ranked items:"
+        for item in self.sortedList:
+            returnString += "\n"
+            returnString += self.items[item].name
+        return returnString

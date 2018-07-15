@@ -9,13 +9,9 @@ def main():
     myList.handleVote("France", "England")
     myList.handleVote("Germany", "England")
     myList.handleVote("France", "Germany")
-    myList.handleVote("Australia", "Germany")
-    myList.handleVote("Australia", "France")
+    myList.handleVote("France", "Australia")
     myList.handleVote("Australia", "England")
-    print("Score list:")
-    print(myList.scoreList)
-    print("Sorted list:")
-    print(myList.sortedList)
+    print(myList)
 
 if __name__== "__main__":
     main()
