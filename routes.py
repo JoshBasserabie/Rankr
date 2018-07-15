@@ -9,6 +9,10 @@ nav = Nav()
 def home():
     return render_template("index.html")
 
+@app.route("/vote", methods=['GET', 'POST'])
+def vote():
+    return render_template("vote.html")
+
 @nav.navigation()
 def mynavbar():
     return Navbar(
