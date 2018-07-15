@@ -17,7 +17,6 @@ class RankedList:
         self.items = []
         # number of items
         self.itemNum = 0
-        print(itemNames)
         for item in itemNames:
             self.addItem(item)
 
