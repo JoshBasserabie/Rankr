@@ -1,7 +1,7 @@
 from Model.RankedList import RankedList
 
 def main():
-    myList = RankedList()
+    myList = RankedList("Countries")
     myList.addItem("France")
     myList.addItem("England")
     myList.addItem("Germany")

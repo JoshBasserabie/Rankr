@@ -3,8 +3,7 @@ from Model.Item import Item
 
 class RankedList:
 
-    def __init__(self, ID, name, itemNames):
-        self.ID = ID
+    def __init__(self, name, itemNames = []):
         self.name = name
         # List of Item IDs in ranked order
         self.sortedList = []
