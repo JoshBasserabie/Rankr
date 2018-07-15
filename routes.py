@@ -12,10 +12,8 @@ def home():
 @nav.navigation()
 def mynavbar():
     return Navbar(
-        'Carry Me Daddy',
+        'Rankr',
         View('Home', 'home'),
-        View('Team Stats', 'stats'),
-        View('Team Page', 'team')
     )
 
 nav.init_app(app)
