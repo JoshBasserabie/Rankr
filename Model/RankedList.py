@@ -53,3 +53,12 @@ class RankedList:
 
     def updateSortedList(self, itemID):
         #fix the sorted list by moving itemID until it is in a valid position
+        position = self.sortedList.index(itemID)
+        if position < len(self.sortedList):
+            while self.scoreList[itemID] > self.scoreList[self.sortedList[position + 1]]:
+                self.sortedList[position], self.sortedList[position + 1] = self.sortedList[position + 1], self.sortedList[position]
+                position += 1
+        if position > 0:
+            while self.scoreList[itemID] < self.scoreList[self.sortedList[position - 1]]:
+                self.sortedList[position], self.sortedList[position - 1] = self.sortedList[position - 1], self.sortedList[position]
+                position -= 1
