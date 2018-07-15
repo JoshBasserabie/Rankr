@@ -8,10 +8,11 @@ nav = Nav()
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if request.method == "POST":
-        RankrSystem.createList()
-        print(request.form)
+        newList = RankrSystem.createList(request.form['ListName'])
         for item in request.form:
-            print(request.form[item])
+            if item != 'ListName':
+                newList.addItem(request.form[item])
+        print(newList)
     return render_template("index.html")
 
 @app.route("/vote", methods=['GET', 'POST'])
