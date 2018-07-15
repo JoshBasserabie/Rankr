@@ -3,19 +3,23 @@ from Model.Item import Item
 
 class RankedList:
 
-    def __init__(self):
-        #List of Item IDs in ranked order
+    def __init__(self, ID, name, itemNames):
+        self.ID = ID
+        self.name = name
+        # List of Item IDs in ranked order
         self.sortedList = []
-        #List of scores for each item
+        # List of scores for each item
         self.scoreList = []
-        #List of voting 'lists' (actually dictionaries)
+        # List of voting 'lists' (actually dictionaries)
         self.votingList = []
-        #List of voting counts (how many other item each item has been compared to)
+        # List of voting counts (how many other item each item has been compared to)
         self.votingCounts = []
         # List of item references
         self.items = []
         # number of items
         self.itemNum = 0
+        for item in itemNames:
+            self.addItem(item)
 
     def addItem(self, name):
         if name is None:
