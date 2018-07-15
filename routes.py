@@ -8,6 +8,7 @@ nav = Nav()
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if request.method == "POST":
+        RankrSystem.createList()
         print(request.form)
         for item in request.form:
             print(request.form[item])
