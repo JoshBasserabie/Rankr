@@ -8,8 +8,8 @@ class System:
         newList = RankedList(listName, listItemNames)
         if newList is not None:
             self.rankedLists.append(newList)
-            return True
-        return False
+            return newList
+        return None
 
     def deleteList(self, listID):
         if listID > len(self.rankedLists) or listID < 0:
@@ -17,8 +17,3 @@ class System:
         self.rankedLists[listID], self.rankedLists[-1] = self.rankedLists[-1], self.rankedLists[listID]
         self.rankedLists.pop()
         return True
-
-    def getList(self, listID):
-        if listID > len(self.rankedLists) or listID < 0:
-            return None
-        return self.rankedLists[listID]
