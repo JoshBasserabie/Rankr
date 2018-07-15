@@ -20,4 +20,4 @@ class System:
         return True
 
     def contains(self, listName):
-        return self.rankedLists.get(listName, None) is not None
+        return listName in self.rankedLists
