@@ -101,3 +101,7 @@ class RankedList:
             returnString += "\n"
             returnString += self.items[item].name
         return returnString
+
+    @property
+    def name(self):
+        return self.name
