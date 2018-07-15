@@ -1,4 +1,4 @@
-from RankedList import RankedList
+from Model.RankedList import RankedList
 
 def main():
     myList = RankedList()
