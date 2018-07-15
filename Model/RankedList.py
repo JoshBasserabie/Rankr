@@ -1,35 +1,42 @@
 from __future__ import division
+from Item import Item
 
 class RankedList:
 
     def __init__(self):
         #List of Item IDs in ranked order
-        sortedList = []
+        self.sortedList = []
         #List of scores for each item
-        scoreList = []
+        self.scoreList = []
         #List of voting 'lists' (actually dictionaries)
-        votingList = []
+        self.votingList = []
         # List of item references
-        items = []
+        self.items = []
         # number of items
-        itemNum = 0
+        self.itemNum = 0
 
     def addItem(self, name):
         if name is None:
-            return False
-        newItem = Item(len(self.sortedList), name)
+            return None
+        newItem = Item(self.itemNum, name)
         if newItem is None:
-            return False
-        self.sortedList.append(len(self.sortedList))
+            return None
+        self.sortedList.append(self.itemNum)
         self.votingList.append({})
         self.items.append(newItem)
         self.scoreList.append(0)
         self.itemNum += 1
-        return True
+        return self.itemNum
 
-    def handleVote(self, winnerID, loserID):
+    def handleVote(self, winnerName, loserName):
+        winnerID = self.findItemIDByName(winnerName)
+        loserID = self.findItemIDByName(loserName)
+        if winnerID is None or loserID is None:
+            return
         voteDictionary = self.votingList[winnerID]
-        if voteDictionary[loserID] is None:
+        try:
+            voteDictionary[loserID]
+        except KeyError:
             voteDictionary[loserID] = 0
         voteDictionary[loserID] += 1
         self.updateScore(winnerID)
@@ -42,23 +49,31 @@ class RankedList:
         score = 0.0
         count = 0
         votes = self.votingList[itemID]
-        for i in range(len(self.items)):
-            currVotes = self.votingList[i]
+        for i in range(self.itemNum):
             if i != itemID:
-                if votes[i] != 0 or currVotes[itemID] != 0:
+                currVotes = self.votingList[i]
+                votesFor = votes.get(i, 0)
+                votesAgainst = currVotes.get(itemID, 0)
+                if votesFor != 0 or votesAgainst != 0:
                     count += 1
-                score += votes[i] / (votes[i] + currVotes[itemID])
+                    score += votesFor / (votesFor + votesAgainst)
         score /= count
         self.scoreList[itemID] = score
 
     def updateSortedList(self, itemID):
         #fix the sorted list by moving itemID until it is in a valid position
         position = self.sortedList.index(itemID)
-        if position < len(self.sortedList):
-            while self.scoreList[itemID] > self.scoreList[self.sortedList[position + 1]]:
-                self.sortedList[position], self.sortedList[position + 1] = self.sortedList[position + 1], self.sortedList[position]
-                position += 1
-        if position > 0:
-            while self.scoreList[itemID] < self.scoreList[self.sortedList[position - 1]]:
-                self.sortedList[position], self.sortedList[position - 1] = self.sortedList[position - 1], self.sortedList[position]
-                position -= 1
+        while position < len(self.sortedList) - 1 and self.scoreList[itemID] < self.scoreList[self.sortedList[position + 1]]:
+            self.sortedList[position], self.sortedList[position + 1] = self.sortedList[position + 1], self.sortedList[position]
+            position += 1
+        while position > 0 and self.scoreList[itemID] > self.scoreList[self.sortedList[position - 1]]:
+            self.sortedList[position], self.sortedList[position - 1] = self.sortedList[position - 1], self.sortedList[position]
+            position -= 1
+
+    def findItemIDByName(self, name):
+        ID = None
+        for i in range(len(self.items)):
+            if self.items[i].name == name:
+                ID = i
+                break
+        return ID
