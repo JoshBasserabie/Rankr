@@ -20,6 +20,8 @@ def home():
 
 @app.route("/vote/<listName>/", methods=['GET', 'POST'])
 def vote(listName):
+    if request.method == "POST":
+        print(request.form['submit'])
     if not RankrSystem.contains(listName):
         return redirect(url_for('home'))
     voting_list = RankrSystem.get_list(listName)

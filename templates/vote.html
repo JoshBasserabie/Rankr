@@ -10,7 +10,13 @@
         </div>
       </div>
 
-    <img src="http://placehold.it/200x200?text={{ first.name }}" class="rounded float-left" alt="" style="width: 30%; float: middle; margin-left: 230px;">
-    <img src="http://placehold.it/200x200?text={{ second.name }}" class="rounded float-right" alt="" style="width: 30%; float: middle; margin-left: 100px;">
+    <form method="POST">
+    <div style="float: left; margin-left: 15%;">
+        <input type="image"  name = "submit" value = "first" src="http://placehold.it/200x200?text={{ first.name }}" alt=""/ style="width: 200%;">
+    </div>
+    <div style="float: right; margin-right: 28%;">
+        <input type="image"  name = "submit" value = "second" src="http://placehold.it/200x200?text={{ second.name }}" alt="" style="width: 200%;" />
+   </div>
+    </form>
 
 {% endblock %}
