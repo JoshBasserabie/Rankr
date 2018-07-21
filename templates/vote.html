@@ -12,10 +12,10 @@
 
     <form method="POST">
     <div style="float: left; margin-left: 15%;">
-        <input type="image"  name = "submit" value = "first" src="http://placehold.it/200x200?text={{ first.name }}" alt=""/ style="width: 200%;">
+        <input type="image"  name = "submit" value = "{{ first.id }} {{ second.id }}" src="http://placehold.it/200x200?text={{ first.name }}" alt=""/ style="width: 200%;">
     </div>
     <div style="float: right; margin-right: 28%;">
-        <input type="image"  name = "submit" value = "second" src="http://placehold.it/200x200?text={{ second.name }}" alt="" style="width: 200%;" />
+        <input type="image"  name = "submit" value = "{{ second.id }} {{ first.id }}" src="http://placehold.it/200x200?text={{ second.name }}" alt="" style="width: 200%;" />
    </div>
     </form>
 

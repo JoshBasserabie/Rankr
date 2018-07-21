@@ -36,9 +36,7 @@ class RankedList:
         self.itemNum += 1
         return True
 
-    def handleVote(self, winnerName, loserName):
-        winnerID = self.findItemIDByName(winnerName)
-        loserID = self.findItemIDByName(loserName)
+    def handleVote(self, winnerID, loserID):
         if winnerID is None or loserID is None:
             return
         voteDictionary = self.votingList[winnerID]
@@ -103,6 +101,8 @@ class RankedList:
 
     def __str__(self):
         returnString = ""
+        returnString += self.name
+        returnString += "\n"
         returnString += "Ranked items:"
         for item in self.sortedList:
             returnString += "\n"
