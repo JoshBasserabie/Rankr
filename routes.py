@@ -10,7 +10,7 @@ nav = Nav()
 def home():
     if request.method == "POST":
         print(request.form['ListName'])
-        newList = RankrSystem.createList(request.form['ListName'])
+        newList = RankrSystem.create_list(request.form['ListName'])
         for item in request.form:
             if item != "ListName":
                 newList.addItem(request.form[item])
@@ -23,7 +23,7 @@ def vote(listName):
     if not RankrSystem.contains(listName):
         return redirect(url_for('home'))
     voting_list = RankrSystem.get_list(listName)
-    voting_pair = sample(voting_list, 2)
+    voting_pair = sample(list(voting_list), 2)
     return render_template("vote.html", listName = listName, first = voting_pair[0], second = voting_pair[1])
 
 @nav.navigation()
