@@ -5,7 +5,7 @@
 <h2>{{ voting_list.name }}</h2>
 <ol>
 {% for item in voting_list.sortedList %}
-    <li>{{ item.name }}</li>
+    <li>{{ voting_list.items[item].name }}</li>
 {% endfor %}
 </ol>
 {% endblock %}

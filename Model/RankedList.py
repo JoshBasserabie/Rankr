@@ -100,7 +100,7 @@ class RankedList:
 
 
     @property
-    def sorted_list(self):
+    def sortedList(self):
         return self._sortedList
 
     @property

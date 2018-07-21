@@ -37,6 +37,7 @@ def vote(listName):
 @app.route("/results/<listName>/", methods=['GET'])
 def results(listName):
     voting_list = RankrSystem.get_list(listName)
+    print(voting_list.sortedList)
     return render_template("results.html", voting_list = voting_list)
 
 
