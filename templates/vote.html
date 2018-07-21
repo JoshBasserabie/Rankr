@@ -2,7 +2,6 @@
 {% block title %}Rankr{% endblock %}
 
 {% block content %}
-    
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -77,11 +76,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 </style>
 
-<h2>Animated Modal with Header and Footer</h2>
-
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -106,16 +100,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
 // Get the modal
 var modal = document.getElementById('myModal');
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
-btn.onclick = function() {
+{% if hasVoted %}
     modal.style.display = "block";
-}
+{% endif %}
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -130,8 +121,6 @@ window.onclick = function(event) {
 }
 </script>
 
-
-        <!-- Team Members Row -->
       <div class="row">
         <div class="col-lg-12">
           <h2 style="text-align: center;">{{ listName }}</h2>

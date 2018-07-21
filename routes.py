@@ -22,13 +22,15 @@ def vote(listName):
     if not RankrSystem.contains(listName):
         return redirect(url_for('home'))
     voting_list = RankrSystem.get_list(listName)
+    voting_pair = voting_list.get_random_pair()
     if request.method == "POST":
         vote = request.form['submit']
         winner, loser = [int(i) for i in vote.split()]
         voting_list.handleVote(winner, loser)
         print(voting_list)
-    voting_pair = voting_list.get_random_pair()
-    return render_template("vote.html", listName = listName, first = voting_pair[0], second = voting_pair[1])
+        return render_template("vote.html", hasVoted = True, listName = listName, first = voting_pair[0], second = voting_pair[1])
+    print(voting_pair)
+    return render_template("vote.html", hasVoted = False, listName = listName, first = voting_pair[0], second = voting_pair[1])
 
 @nav.navigation()
 def mynavbar():
