@@ -18,6 +18,8 @@ class RankedList:
         self._items = []
         # number of items
         self.itemNum = 0
+        # items that should be voted on before others
+        self.voting_items = []
         for item in itemNames:
             self.addItem(item)
 
@@ -33,6 +35,7 @@ class RankedList:
         self.votingCounts.append(0)
         self.scoreList.append(0.0)
         self.updateSortedList(self.itemNum)
+        self.voting_items.append(self.itemNum)
         self.itemNum += 1
         return True
 
@@ -94,9 +97,23 @@ class RankedList:
         return ID
 
     def get_random_pair(self):
+        prioritise = None
         if len(self._items) < 2:
             return None
-        return sample(self._items, 2)
+        if len(self.voting_items) < 2:
+            prioritise = self.voting_items[0]
+            self.voting_items = self._sortedList.copy()
+        first, second = sample(self.voting_items, 2)
+        if prioritise is not None and prioritise not in [first, second]:
+            first = prioritise
+            if sample(range(2), 1) == 1:
+                first, second = second, first
+        self.voting_items.remove(first)
+        self.voting_items.remove(second)
+        first = self._items[first]
+        second = self._items[second]
+        print(first, second)
+        return [first, second]
 
 
     @property
