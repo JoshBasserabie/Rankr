@@ -23,7 +23,7 @@ def vote(listName):
     if not RankrSystem.contains(listName):
         return redirect(url_for('home'))
     voting_list = RankrSystem.get_list(listName)
-    voting_pair = sample(list(voting_list), 2)
+    voting_pair = voting_list.get_random_pair()
     return render_template("vote.html", listName = listName, first = voting_pair[0], second = voting_pair[1])
 
 @nav.navigation()

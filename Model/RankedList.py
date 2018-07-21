@@ -1,4 +1,5 @@
 from __future__ import division
+from random import sample
 from Model.Item import Item
 
 class RankedList:
@@ -93,6 +94,12 @@ class RankedList:
                 ID = i
                 break
         return ID
+
+    def get_random_pair(self):
+        if len(self.items) < 2:
+            return None
+        return sample(self.items, 2)
+
 
     def __str__(self):
         returnString = ""
