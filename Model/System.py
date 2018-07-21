@@ -3,21 +3,17 @@ from Model.RankedList import RankedList
 
 class System:
     def __init__(self):
-        self.rankedLists = {}
+        self.ranked_lists = {}
 
-    def createList(self, listName, listItemNames=[]):
-        newList = RankedList(listName, listItemNames)
-        if newList is not None:
-            self.rankedLists[listName] = newList
-            return newList
+    def create_list(self, list_name, list_item_names=[]):
+        new_list = RankedList(list_name, list_item_names)
+        if new_list is not None:
+            self.ranked_lists[list_name] = new_list
+            return new_list
         return None
 
-    def deleteList(self, listID):
-        if listID > len(self.rankedLists) or listID < 0:
-            return False
-        self.rankedLists[listID], self.rankedLists[-1] = self.rankedLists[-1], self.rankedLists[listID]
-        self.rankedLists.pop()
-        return True
+    def delete_list(self, list_name):
+        return self.ranked_lists.pop(list_name, None)
 
-    def contains(self, listName):
-        return listName in self.rankedLists
+    def contains(self, list_name):
+        return list_name in self.ranked_lists
