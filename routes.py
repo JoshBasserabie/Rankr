@@ -1,3 +1,4 @@
+from random import sample
 from server import app, RankrSystem
 from flask import render_template, request, redirect, url_for, abort
 from flask_nav import Nav
@@ -19,9 +20,11 @@ def home():
 
 @app.route("/vote/<listName>/", methods=['GET', 'POST'])
 def vote(listName):
-    if RankrSystem.contains(listName) == False:
+    if not RankrSystem.contains(listName):
         return redirect(url_for('home'))
-    return render_template("vote.html", listName = listName)
+    voting_list = RankrSystem.get_list(listName)
+    voting_pair = sample(voting_list, 2)
+    return render_template("vote.html", listName = listName, first = voting_pair[0], second = voting_pair[1])
 
 @nav.navigation()
 def mynavbar():

@@ -17,3 +17,6 @@ class System:
 
     def contains(self, list_name):
         return list_name in self.ranked_lists
+
+    def get_list(self, list_name):
+        return self.ranked_lists.get(list_name, None)
