@@ -27,10 +27,18 @@ def vote(listName):
         vote = request.form['submit']
         winner, loser = [int(i) for i in vote.split()]
         voting_list.handleVote(winner, loser)
+        winner = voting_list.items[winner].name
+        loser = voting_list.items[loser].name
         print(voting_list)
-        return render_template("vote.html", hasVoted = True, listName = listName, first = voting_pair[0], second = voting_pair[1])
+        return render_template("vote.html", hasVoted = True, listName = listName, first = voting_pair[0], second = voting_pair[1], winner=winner, loser=loser)
     print(voting_pair)
     return render_template("vote.html", hasVoted = False, listName = listName, first = voting_pair[0], second = voting_pair[1])
+
+@app.route("/results/<listName>/", methods=['GET'])
+def results(listName):
+    voting_list = RankrSystem.get_list(listName)
+    return render_template("results.html", voting_list = voting_list)
+
 
 @nav.navigation()
 def mynavbar():

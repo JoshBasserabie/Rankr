@@ -7,7 +7,7 @@ class RankedList:
     def __init__(self, name, itemNames = []):
         self.name = name
         # List of Item IDs in ranked order
-        self.sortedList = []
+        self._sortedList = []
         # List of scores for each item
         self.scoreList = []
         # List of voting 'lists' (actually dictionaries)
@@ -15,7 +15,7 @@ class RankedList:
         # List of voting counts (how many other item each item has been compared to)
         self.votingCounts = []
         # List of item references
-        self.items = []
+        self._items = []
         # number of items
         self.itemNum = 0
         for item in itemNames:
@@ -27,9 +27,9 @@ class RankedList:
         newItem = Item(self.itemNum, name)
         if newItem is None:
             return False
-        self.sortedList.append(self.itemNum)
+        self._sortedList.append(self.itemNum)
         self.votingList.append({})
-        self.items.append(newItem)
+        self._items.append(newItem)
         self.votingCounts.append(0)
         self.scoreList.append(0.0)
         self.updateSortedList(self.itemNum)
@@ -69,42 +69,50 @@ class RankedList:
 
     def updateSortedList(self, itemID):
         #fix the sorted list by moving itemID until it is in a valid position
-        position = self.sortedList.index(itemID)
-        while position < len(self.sortedList) - 1 and self.scoreList[itemID] <= self.scoreList[self.sortedList[position + 1]]:
-            if self.scoreList[itemID] == self.scoreList[self.sortedList[position + 1]]:
-                if self.votingCounts[itemID] >= self.votingCounts[self.sortedList[position + 1]]:
+        position = self._sortedList.index(itemID)
+        while position < len(self._sortedList) - 1 and self.scoreList[itemID] <= self.scoreList[self._sortedList[position + 1]]:
+            if self.scoreList[itemID] == self.scoreList[self._sortedList[position + 1]]:
+                if self.votingCounts[itemID] >= self.votingCounts[self._sortedList[position + 1]]:
                     position += 1
                     continue
-            self.sortedList[position], self.sortedList[position + 1] = self.sortedList[position + 1], self.sortedList[position]
+            self._sortedList[position], self._sortedList[position + 1] = self._sortedList[position + 1], self._sortedList[position]
             position += 1
-        while position > 0 and self.scoreList[itemID] >= self.scoreList[self.sortedList[position - 1]]:
-            if self.scoreList[itemID] == self.scoreList[self.sortedList[position - 1]]:
-                if self.votingCounts[itemID] <= self.votingCounts[self.sortedList[position - 1]]:
+        while position > 0 and self.scoreList[itemID] >= self.scoreList[self._sortedList[position - 1]]:
+            if self.scoreList[itemID] == self.scoreList[self._sortedList[position - 1]]:
+                if self.votingCounts[itemID] <= self.votingCounts[self._sortedList[position - 1]]:
                     position -= 1
                     continue
-            self.sortedList[position], self.sortedList[position - 1] = self.sortedList[position - 1], self.sortedList[position]
+            self._sortedList[position], self._sortedList[position - 1] = self._sortedList[position - 1], self._sortedList[position]
             position -= 1
 
     def findItemIDByName(self, name):
         ID = None
-        for i in range(len(self.items)):
-            if self.items[i].name == name:
+        for i in range(len(self._items)):
+            if self._items[i].name == name:
                 ID = i
                 break
         return ID
 
     def get_random_pair(self):
-        if len(self.items) < 2:
+        if len(self._items) < 2:
             return None
-        return sample(self.items, 2)
+        return sample(self._items, 2)
 
+
+    @property
+    def sorted_list(self):
+        return self._sortedList
+
+    @property
+    def items(self):
+        return self._items
 
     def __str__(self):
         returnString = ""
         returnString += self.name
         returnString += "\n"
         returnString += "Ranked items:"
-        for item in self.sortedList:
+        for item in self._sortedList:
             returnString += "\n"
-            returnString += self.items[item].name
+            returnString += self._items[item].name
         return returnString

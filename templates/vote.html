@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Rankr{% endblock %}
+{% block title %}{{ listName }}{% endblock %}
 
 {% block content %}
 <style>
@@ -83,14 +83,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
   <div class="modal-content">
     <div class="modal-header">
       <span class="close">&times;</span>
-      <h2>Modal Header</h2>
+      <h2>Thanks for voting!</h2>
     </div>
     <div class="modal-body">
-      <p>Some text in the Modal Body</p>
-      <p>Some other text...</p>
+        <button type="button" class="btn btn-primary" onclick="modal.style.display = 'none';" style="width: 40%; height: 150px; margin-left: 5%; margin-top: 3%; margin-bottom: 3%; font-size: 45px;">Vote Again</button>
+        <a href="{{ url_for('results', listName=listName) }}"> <button type="button" class="btn btn-secondary" style="width: 40%; height: 150px; margin-left: 10%; margin-top: 3%; margin-bottom: 3%; font-size: 45px;">See Results</button> </a>
     </div>
     <div class="modal-footer">
-      <h3>Modal Footer</h3>
+      <h3>You voted for {{ winner }} over {{ loser }}.</h3>
     </div>
   </div>
 
