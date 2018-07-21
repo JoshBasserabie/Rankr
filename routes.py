@@ -24,8 +24,7 @@ def vote(listName):
     voting_list = RankrSystem.get_list(listName)
     if request.method == "POST":
         vote = request.form['submit']
-        winner, loser = vote.split()
-        winner, loser = int(winner), int(loser)
+        winner, loser = [int(i) for i in vote.split()]
         voting_list.handleVote(winner, loser)
         print(voting_list)
     voting_pair = voting_list.get_random_pair()
